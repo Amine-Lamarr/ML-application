@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calories Counter</title>
+  <link rel="stylesheet" href="stylee.css">
+</head>
+<body>
+  <header>
+    <h1 class="logo">Calories Counter</h1>
+    <h2>By Amine</h2>
+  </header>
+
+  <div class="container">
+    <div class="tit">calories predictor</div>
+    <p class="warn">For the most accurate results, please enter your information carefully. The more precise your data, the more reliable your calorie estimate will be, Amine wish u the best.</p>
+
+    <div class="inputs">
+      <input type="text" id="gender" placeholder="male / female" required>
+      <input type="number" id="age" placeholder="your Age" required>
+      <input type="number" id="height" placeholder="height (cm)" required>
+      <!-- مهم: id هنا weight مش width -->
+      <input type="number" id="weight" placeholder="weight (Kg)" required>
+      <input type="number" id="duration" placeholder="training duration (min)" required>
+      <input type="number" id="heart" placeholder="heart rate" required>
+      <input type="number" id="body" placeholder="body temperature (C)" required>
+    </div>
+
+    <div class="predict">
+      <p>make sure everything is right and <br> press predict</p>
+      <!-- type="button" عشان ما يحصلش submit غير مرغوب -->
+      <button type="button">predict</button>
+    </div>
+
+    <div id="result" style="margin-top:16px; font-weight:600;"></div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const button = document.querySelector(".predict button");
+      const resultDiv = document.getElementById("result");
+
+      button.addEventListener("click", async () => {
+        // جلب القيم
+        const gender = document.getElementById("gender").value.trim();
+        const age = parseFloat(document.getElementById("age").value);
+        const height = parseFloat(document.getElementById("height").value);
+        const weight = parseFloat(document.getElementById("weight").value);
+        const duration = parseFloat(document.getElementById("duration").value);
+        const heart = parseFloat(document.getElementById("heart").value);
+        const body = parseFloat(document.getElementById("body").value);
+
+        // تحقق بسيط قبل الإرسال
+        if (!gender || isNaN(age) || isNaN(height) || isNaN(weight) || isNaN(duration) || isNaN(heart) || isNaN(body)) {
+          resultDiv.innerText = "Please fill all fields correctly.";
+          return;
+        }
+
+        const payload = { gender, age, height, weight, duration, heart, body };
+        console.log("Sending payload:", payload);
+
+        try {
+          const response = await fetch("http://127.0.0.1:8000/predict", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          });
+
+          console.log("Fetch response:", response.status, response.statusText);
+
+          if (!response.ok) {
+            const txt = await response.text();
+            console.error("Server error:", response.status, txt);
+            resultDiv.innerText = `Server error ${response.status}: ${response.statusText}`;
+            return;
+          }
+
+          const data = await response.json();
+          resultDiv.innerText = `Predicted Calories: ${data.predicted_calories}`;
+        } catch (err) {
+          console.error("Fetch error:", err);
+          resultDiv.innerText = "Error connecting to server. Check console (F12) for details.";
+        }
+      });
+    });
+  </script>
+</body>
+</html>
