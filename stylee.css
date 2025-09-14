@@ -145,3 +145,75 @@ button:hover{
     right:65%;
     color: rgb(1, 65, 1);
 }
+
+@media (max-width: 600px) {
+  header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  header .logo {
+    font-size: 32px;
+    margin: 10px 0;
+    padding: 10px;
+  }
+
+  header h2 {
+    font-size: 24px;
+    margin: 5px 0 15px 0;
+    padding: 5px;
+  }
+
+  .container {
+    width: 95%;
+    height: auto;
+    margin: 20px auto;
+    padding: 15px;
+    box-sizing: border-box;
+  }
+
+  .tit {
+    font-size: 28px;
+  }
+
+  .container .warn {
+    font-size: 14px;
+    padding: 5px;
+  }
+
+  .inputs {
+    margin: 0 auto;
+    width: 100%;
+    padding: 0;
+  }
+
+  .inputs input {
+    width: 100%;
+    max-width: 100%;
+    font-size: 16px;
+  }
+
+  .predict p {
+    position: static;
+    width: 100%;
+    font-size: 14px;
+    margin: 15px 0;
+  }
+
+  button {
+    position: static;
+    margin: 10px auto;
+    display: block;
+    width: 80%;
+    max-width: 250px;
+    font-size: 18px;
+  }
+
+  #result {
+    position: static;
+    margin: 20px auto;
+    text-align: center;
+    font-size: 20px;
+    width: 100%;
+  }
+}
