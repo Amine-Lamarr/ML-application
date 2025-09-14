@@ -20,7 +20,6 @@
       <input type="text" id="gender" placeholder="male / female" required>
       <input type="number" id="age" placeholder="your Age" required>
       <input type="number" id="height" placeholder="height (cm)" required>
-      <!-- مهم: id هنا weight مش width -->
       <input type="number" id="weight" placeholder="weight (Kg)" required>
       <input type="number" id="duration" placeholder="training duration (min)" required>
       <input type="number" id="heart" placeholder="heart rate" required>
@@ -29,7 +28,6 @@
 
     <div class="predict">
       <p>make sure everything is right and <br> press predict</p>
-      <!-- type="button" عشان ما يحصلش submit غير مرغوب -->
       <button type="button">predict</button>
     </div>
 
@@ -42,7 +40,6 @@
       const resultDiv = document.getElementById("result");
 
       button.addEventListener("click", async () => {
-        // جلب القيم
         const gender = document.getElementById("gender").value.trim();
         const age = parseFloat(document.getElementById("age").value);
         const height = parseFloat(document.getElementById("height").value);
@@ -51,7 +48,6 @@
         const heart = parseFloat(document.getElementById("heart").value);
         const body = parseFloat(document.getElementById("body").value);
 
-        // تحقق بسيط قبل الإرسال
         if (!gender || isNaN(age) || isNaN(height) || isNaN(weight) || isNaN(duration) || isNaN(heart) || isNaN(body)) {
           resultDiv.innerText = "Please fill all fields correctly.";
           return;
